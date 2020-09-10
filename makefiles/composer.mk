@@ -21,22 +21,22 @@ composer-init:
 	@mkdir -p ~/.cache/composer
 
 composer-require: composer-init ##@composer add a new package
-	$(call COMPOSER_DOCKER_CMD, require $(COMPOSER_CLI_ARGS) --ignore-platform-reqs)
+	$(call COMPOSER_DOCKER_CMD, require $(COMPOSER_CLI_ARGS))
 
 composer-require-dev: composer-init ##@composer add a new package in require-dev
-	$(call COMPOSER_DOCKER_CMD, require $(COMPOSER_CLI_ARGS) --dev --ignore-platform-reqs)
+	$(call COMPOSER_DOCKER_CMD, require $(COMPOSER_CLI_ARGS) --dev)
 
 composer-remove: composer-init ##@composer remove a package
-	$(call COMPOSER_DOCKER_CMD, remove $(COMPOSER_CLI_ARGS) --ignore-platform-reqs)
+	$(call COMPOSER_DOCKER_CMD, remove $(COMPOSER_CLI_ARGS))
 
 composer-remove-dev: composer-init ##@composer remove a package
-	$(call COMPOSER_DOCKER_CMD, remove $(COMPOSER_CLI_ARGS) --dev --ignore-platform-reqs)
+	$(call COMPOSER_DOCKER_CMD, remove $(COMPOSER_CLI_ARGS) --dev)
 
 composer-install: composer-init ##@composer install composer dependencies
-	$(call COMPOSER_DOCKER_CMD, install --ignore-platform-reqs --no-progress --no-suggest --prefer-dist --optimize-autoloader ${COMPOSER_ARGS})
+	$(call COMPOSER_DOCKER_CMD, install --no-progress --no-suggest --prefer-dist --optimize-autoloader ${COMPOSER_ARGS})
 
 composer-update: composer-init ##@composer update composer dependencies
-	$(call COMPOSER_DOCKER_CMD, update, --ignore-platform-reqs)
+	$(call COMPOSER_DOCKER_CMD, update,)
 
 composer-dump-autoload: composer-init ##@composer dump autoloading
 	$(call COMPOSER_DOCKER_CMD, dump-autoload)

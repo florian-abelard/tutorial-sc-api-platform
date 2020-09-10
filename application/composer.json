@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/core": "^2.5",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
         "nelmio/cors-bundle": "^2.1",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -19,6 +20,7 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "symfony/maker-bundle": "^1.21"
     },
     "config": {
         "preferred-install": {
