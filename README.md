@@ -2,7 +2,7 @@
 
 ## Description 
 
-Test application support for the tutorial 
+Application support pour le tutoriel 
 
 https://symfonycasts.com/screencast/api-platform
 
