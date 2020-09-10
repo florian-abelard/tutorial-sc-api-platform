@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+
+  composer:
+    image: composer:latest
+    container_name: ${APP_NAME}-composer
+    environment:
+      - COMPOSER_CACHE_DIR=/tmp/.composer/cache
+      - COMPOSER_MEMORY_LIMIT=-1
+    volumes:
+      - "${ROOT_PATH}:/var/www/app:cached"
+      - "~/.cache/composer:/tmp/.composer/cache"
+    working_dir: /var/www/app/application
+
+  node:
+    image: node:13
+    container_name: ${APP_NAME}-node
+    environment:
+      - HOME=/opt
+    volumes:
+      - "${ROOT_PATH}:/var/www/app:cached"
+      - "~/.npm:/opt/.npm"
+    working_dir: /var/www/app/application

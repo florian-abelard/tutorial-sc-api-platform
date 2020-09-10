@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+
+  phpstan:
+    build: images/phpstan
+    image: ${APP_NAME}-phpstan:develop
+    container_name: ${APP_NAME}-phpstan
+    volumes:
+      - "${ROOT_PATH}:/app"

@@ -1,0 +1,4 @@
+parameters:
+    symfony:
+        container_xml_path: /app/application/var/cache/dev/srcApp_KernelDevDebugContainer.xml # @see https://github.com/phpstan/phpstan-symfony#configuration
+        console_application_loader: /app/docker/images/phpstan/console-loader.php
