@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/core": "^2.5",
+        "carbondate/carbon": "^1.33",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "nelmio/cors-bundle": "^2.1",
         "symfony/asset": "4.4.*",
@@ -21,6 +22,7 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.7",
         "symfony/maker-bundle": "^1.21",
         "symfony/stopwatch": "^4.4",
         "symfony/web-profiler-bundle": "^4.4"
