@@ -7,7 +7,14 @@ use App\Repository\CheeseListingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      collectionOperations={"get", "post"},
+ *      itemOperations={
+ *          "get"={"path"="/cheeses/{id}"},
+ *          "put"
+ *      },
+ *      shortName="cheeses"
+ * )
  * @ORM\Entity(repositoryClass=CheeseListingRepository::class)
  */
 class CheeseListing
@@ -30,6 +37,8 @@ class CheeseListing
     private $description;
 
     /**
+     * The price of this delicious cheese, in cents.
+     *
      * @ORM\Column(type="integer")
      */
     private $price;
