@@ -8,7 +8,7 @@ database-doctrine-exec = docker-compose -f ${DOCKER_COMPOSE_FILE} exec -T --user
 
 #------------------------------------------------------------------------------
 
-db-init: db-create db-migrate ##@database create and populate database
+db-init: db-create db-migrate db-populate ##@database create and populate database
 
 db-create: db-drop ##@database create the database
 	$(call database-doctrine-exec, php bin/console doctrine:database:create)
@@ -34,4 +34,4 @@ clean-db: db-drop ##@database clean database
 
 #------------------------------------------------------------------------------
 
-.PHONY: db-init db-create db-drop db-migrate db-create-migration db-schema-update clean-db
+.PHONY: db-init db-create db-drop db-migrate db-create-migration db-populate db-schema-update clean-db

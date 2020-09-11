@@ -1,7 +1,7 @@
 App\Entity\CheeseListing:
   cheese1:
     __construct: ['A large piece of Cheddar']
-    description: ''
+    description: 'Miam'
     price: 1200
   cheese2:
     __construct: ['A truffled Brie']
@@ -9,6 +9,6 @@ App\Entity\CheeseListing:
     price: 4000
   cheese3:
     __construct: ['A little piece of Emmental']
-    description: 'Almost good\n second line'
+    description: 'Almost good\n with a second line'
     price: 50
   
