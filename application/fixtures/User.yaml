@@ -1,0 +1,8 @@
+App\Entity\User:
+  user1:
+    email: 'fabelard@example.com'
+    username: 'fl0'
+  user2:
+    email: 'maudlasterre@example.com'
+    username: 'm4ud'
+  
