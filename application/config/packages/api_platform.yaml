@@ -8,3 +8,16 @@ api_platform:
     collection: 
         pagination:
             items_per_page: 5
+    formats:
+        jsonld:
+            mime_types:
+                - application/ld+json
+        json:
+            mime_types:
+                - application/json
+        html:
+            mime_types:
+                - text/html
+        jsonhal:
+            mime_types:
+                - application/hal+json

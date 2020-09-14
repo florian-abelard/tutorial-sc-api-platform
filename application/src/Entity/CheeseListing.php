@@ -20,7 +20,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *      itemOperations={"get","put"},
  *      shortName="cheeses",
  *      normalizationContext={"groups"={"cheese_listing:read"}},
- *      denormalizationContext={"groups"={"cheese_listing:write"}}
+ *      denormalizationContext={"groups"={"cheese_listing:write"}},
+ *      attributes={
+ *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
+ *      }
  * )
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
  * @ApiFilter(SearchFilter::class, properties={"title": "ipartial", "description": "ipartial"})
