@@ -11,4 +11,12 @@ App\Entity\CheeseListing:
     __construct: ['A little piece of Emmental']
     description: 'Almost good\n with a second line'
     price: 50
+  cheese4:
+    __construct: ['Corsican cheese of ewe']
+    description: 'Strong but not too much'
+    price: 700  
+  cheese_{5..15}:
+    __construct: ['<sentence(5, true)>']
+    description: <text(300)>
+    price: <numberBetween(50,5000)>
   
