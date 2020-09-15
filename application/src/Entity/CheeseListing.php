@@ -32,7 +32,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
- * @ApiFilter(SearchFilter::class, properties={"title": "ipartial", "description": "ipartial"})
+ * @ApiFilter(
+ *      SearchFilter::class,
+ *      properties={
+ *          "title": "ipartial",
+ *          "description": "ipartial",
+ *          "owner": "exact",
+ *          "owner.username": "ipartial"
+ *      }
+ * )
  * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ApiFilter(PropertyFilter::class)
  *

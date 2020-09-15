@@ -12,7 +12,7 @@ Accès interface web sur `http://localhost:8080`
 
 Accès adminer sur `http://localhost:8081`
 
-## Exempales d'appel de l'API
+## Exempales d'appel à l'API
 
 ```bash
 
@@ -27,4 +27,8 @@ curl "http://localhost:8080/api/cheeses?price[gt]=1000" -H "accept: application/
 
 # Fitlre sur les propriétés retournées
 curl "http://localhost:8080/api/users/3?properties[]=username&properties[cheeseListings][]=title" -H "accept: application/ld+json" | jq
+
+# Récupération des fromages de Roxane
+curl "http://localhost:8080/api/cheeses?owner.username=r0x" -H "accept: application/ld+json" | jq
+
 ```
