@@ -58,7 +58,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Groups({"user:read", "user:write", "cheese_listing:item:get"})
+     * @Groups({"user:read", "user:write", "cheese_listing:item:get", "cheese_listing:write"})
      *
      * @Assert\NotBlank()
      *
@@ -67,7 +67,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "user:write"})
      *
      * @ORM\OneToMany(targetEntity=CheeseListing::class, mappedBy="owner")
      */
