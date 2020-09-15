@@ -18,7 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *      collectionOperations={"get", "post"},
- *      itemOperations={"get","put"},
+ *      itemOperations={
+ *          "get",
+ *          "put"
+ *      },
  *      shortName="cheeses",
  *      normalizationContext={"groups"={"cheese_listing:read"}},
  *      denormalizationContext={"groups"={"cheese_listing:write"}},
@@ -43,7 +46,7 @@ class CheeseListing
     private $id;
 
     /**
-     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read"})
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
@@ -65,7 +68,7 @@ class CheeseListing
     /**
      * The price of this delicious cheese, in cents.
      *
-     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read"})
      *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
@@ -82,6 +85,14 @@ class CheeseListing
      * @ORM\Column(type="boolean")
      */
     private $isPublished;
+
+    /**
+     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+     *
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="cheeseListings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
 
     public function __construct(string $title)
     {
@@ -170,6 +181,18 @@ class CheeseListing
     public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
