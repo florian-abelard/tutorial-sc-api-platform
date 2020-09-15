@@ -58,7 +58,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Groups({"user:read", "user:write", "cheese_listing:read"})
+     * @Groups({"user:read", "user:write", "cheese_listing:item:get"})
      *
      * @Assert\NotBlank()
      *
