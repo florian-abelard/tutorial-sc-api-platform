@@ -12,7 +12,7 @@ Accès interface web sur `http://localhost:8080`
 
 Accès adminer sur `http://localhost:8081`
 
-## Exempales d'appel à l'API
+## Exemples d'appel à l'API
 
 ```bash
 
