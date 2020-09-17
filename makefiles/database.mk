@@ -15,7 +15,7 @@ endif
 
 db-init: db-create db-migrate db-populate ##@database create and populate database
 
-db-init-for-test: db-create db-migrate db-populate
+db-init-for-test:
 
 db-create: db-drop ##@database create the database
 	$(call database-doctrine-exec, php bin/console doctrine:database:create $(DB_ARGS))
