@@ -13,6 +13,12 @@ export USER_ID
 export GROUP_ID
 export ROOT_PATH
 
+ifneq (,$(filter phpunit%, $(firstword $(MAKECMDGOALS))))
+	ENV = test
+else
+	ENV = dev
+endif
+
 #------------------------------------------------------------------------------
 
 include .env
