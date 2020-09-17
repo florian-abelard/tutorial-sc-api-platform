@@ -20,7 +20,7 @@ App\Entity\CheeseListing:
     price: 700  
     owner: '@user2'
   cheese_{5..15}:
-    __construct: ['<sentence(5, true)>']
+    __construct: ['<sentence(4, true)>']
     description: <text(300)>
     price: <numberBetween(50,5000)>
     owner: '@user*'
