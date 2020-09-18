@@ -22,12 +22,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      denormalizationContext={"groups"={"user:write"}},
  *      itemOperations={
  *          "get"={"security"="is_granted('ROLE_USER')"},
- *          "put"={"security"="is_granted('ROLE_USER') and object.getOwner() == user"},
- *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *          "put"={"security"="is_granted('ROLE_USER') and object == user"},
+ *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
  *      },
  *      collectionOperations={ *
- *          "get"={"access_control"="is_granted('ROLE_USER')"},
- *          "post"
+ *          "get"={"security"="is_granted('ROLE_USER')"},
+ *          "post"={
+ *              "validation_groups"={"default", "create"}
+ *          }
  *      },
  * )
  * @ApiFilter(PropertyFilter::class)
@@ -72,6 +74,8 @@ class User implements UserInterface
     /**
      * @Groups("user:write")
      * @SerializedName("password")
+     *
+     * @Assert\NotBlank(groups={"create"})
      */
     private $plainPassword;
 
