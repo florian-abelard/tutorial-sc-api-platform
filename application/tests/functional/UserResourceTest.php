@@ -44,4 +44,28 @@ class UserResourceTest extends CustomApiTestCase
             'username' => 'cheezeislife',
         ]);
     }
+
+    public function testGetUser()
+    {
+        $client = self::createClient();
+
+        $user = $this->createUser('cheeseisbeautiful@example.com', 'cantal');
+
+        $this->logIn($client, 'cheeseisbeautiful@example.com', 'cantal');
+
+        $user->setPhoneNumber('0240403030');
+        $user->setRoles(['ROLE_ADMIN']);
+        $em = $this->getEntityManager();
+        $em->flush();
+
+        $client->request('GET', '/api/users/' . $user->getId());
+
+        $this->assertJsonContains([
+            'email' => 'cheeseisbeautiful@example.com',
+        ]);
+
+        $data = $client->getResponse()->toArray();
+
+        $this->assertArrayNotHasKey('phoneNumber', $data);
+    }
 }
