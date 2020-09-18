@@ -60,6 +60,8 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @Groups({"user:write"})
+     *
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -98,6 +100,13 @@ class User implements UserInterface
      */
     private $cheeseListings;
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     *
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $phoneNumber;
+
     public function __construct()
     {
         $this->cheeseListings = new ArrayCollection();
@@ -128,6 +137,13 @@ class User implements UserInterface
     public function getUsername(): string
     {
         return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -193,13 +209,6 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     /**
      * @return Collection|CheeseListing[]
      */
@@ -227,6 +236,18 @@ class User implements UserInterface
                 $cheeseListing->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
