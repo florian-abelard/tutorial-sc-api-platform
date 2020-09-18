@@ -45,16 +45,15 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
-    public function testUpdateCheeseListingWithOwner()
+    public function testUpdateCheeseListing()
     {
         $client = self::createClient();
 
-        $user = $this->createUser('cheese.lover@example.com', '123456');
-
-        $this->login($client, $user->getEmail(), '123456');
+        $ownerUser = $this->createUser('cheese.lover@example.com', '123456');
+        $this->login($client, $ownerUser->getEmail(), '123456');
 
         $cheeseListing = new CheeseListing('Block of cheddar');
-        $cheeseListing->setOwner($user);
+        $cheeseListing->setOwner($ownerUser);
         $cheeseListing->setPrice(1000);
         $cheeseListing->setDescription('mmmhh');
 
@@ -68,9 +67,15 @@ class CheeseListingResourceTest extends CustomApiTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
 
-    public function testUpdateCheeseListingWithAnotherUser()
-    {
+        $anotherUser = $this->createUser('camembert.lover@example.com', '123456');
+        $this->login($client, $anotherUser->getEmail(), '123456');
+
+        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => ['description' => 'Yeah'],
+        ]);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 }
