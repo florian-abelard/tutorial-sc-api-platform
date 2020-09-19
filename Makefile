@@ -40,7 +40,7 @@ include makefiles/*.mk
 
 #------------------------------------------------------------------------------
 
-init: composer-install ## install project dependencies
+init: composer-install npm-install webpack-build  ## install project dependencies
 
 bash-web: ## open a bash session in the web container
 	docker-compose -f ${DOCKER_COMPOSE_FILE} exec web /bin/sh
