@@ -60,7 +60,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @Groups({"user:write"})
+     * @Groups({"admin:write"})
      *
      * @ORM\Column(type="json")
      */
