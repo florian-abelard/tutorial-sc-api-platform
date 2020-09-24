@@ -101,7 +101,7 @@ class User implements UserInterface
     private $cheeseListings;
 
     /**
-     * @Groups({"admin:read", "user:write"})
+     * @Groups({"admin:read", "owner:read", "user:write"})
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
