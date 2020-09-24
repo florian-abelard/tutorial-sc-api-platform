@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      },
  *      itemOperations={
  *          "get"={
- *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
+ *              "normalization_context"={"groups"={"cheese:read", "cheese:item:get"}},
  *          },
  *          "put"={
  *              "security"="is_granted('EDIT', object)",
@@ -31,9 +31,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "delete"={"security"="is_granted('ROLE_ADMIN')"}
  *      },
- *      shortName="cheeses",
- *      normalizationContext={"groups"={"cheese_listing:read"}},
- *      denormalizationContext={"groups"={"cheese_listing:write"}},
+ *      shortName="cheese",
+ *      normalizationContext={"groups"={"cheese:read"}},
+ *      denormalizationContext={"groups"={"cheese:write"}},
  *      attributes={
  *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
  *      }
@@ -63,7 +63,7 @@ class CheeseListing
     private $id;
 
     /**
-     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read", "user:write"})
+     * @Groups({"cheese:read", "cheese:write", "user:read", "user:write"})
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
@@ -76,7 +76,7 @@ class CheeseListing
     private $title;
 
     /**
-     * @Groups({"cheese_listing:read"})
+     * @Groups({"cheese:read"})
      *
      * @ORM\Column(type="text", nullable=true)
      */
@@ -85,7 +85,7 @@ class CheeseListing
     /**
      * The price of this delicious cheese, in cents.
      *
-     * @Groups({"cheese_listing:read", "cheese_listing:write", "user:read", "user:write"})
+     * @Groups({"cheese:read", "cheese:write", "user:read", "user:write"})
      *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
@@ -104,7 +104,7 @@ class CheeseListing
     private $isPublished;
 
     /**
-     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+     * @Groups({"cheese:read", "cheese:write"})
      *
      * @Assert\Valid()
      *
@@ -143,7 +143,7 @@ class CheeseListing
     }
 
     /**
-     * @Groups({"cheese_listing:write", "user:write"})
+     * @Groups({"cheese:write", "user:write"})
      * @SerializedName("description")
      */
     public function setTextDescription(?string $textDescription): self
@@ -154,7 +154,7 @@ class CheeseListing
     }
 
     /**
-     * @Groups({"cheese_listing:read"})
+     * @Groups({"cheese:read"})
      */
     public function getShortDescription(): ?string
     {
@@ -185,7 +185,7 @@ class CheeseListing
     /**
      * How long ago in text that this cheese listing was added.
      *
-     * @Groups({"cheese_listing:read"})
+     * @Groups({"cheese:read"})
      */
     public function getCreatedAtAgo(): ?string
     {
