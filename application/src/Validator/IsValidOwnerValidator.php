@@ -28,7 +28,6 @@ class IsValidOwnerValidator extends ConstraintValidator
             throw new \InvalidArgumentException('@IsValidOwner constraint must be put on a property containing a User object');
         }
 
-        /* @var $user User */
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             $this->context->buildViolation($constraint->anonymousMessage)
@@ -37,9 +36,31 @@ class IsValidOwnerValidator extends ConstraintValidator
             return;
         }
 
-        if ($user->getId() !== $value->getId()) {
+        if ($this->currentUserIsAdmin()) {
+            return;
+        }
+
+        if (!$this->usersAreEqual($user, $value)) {
             $this->context->buildViolation($constraint->message)
             ->addViolation();
         }
+    }
+
+    private function currentUserIsAdmin()
+    {
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function usersAreEqual($currentUser, $value)
+    {
+        if ($currentUser->getId() === $value->getId()) {
+            return true;
+        }
+
+        return false;
     }
 }
