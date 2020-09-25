@@ -49,6 +49,12 @@ class CheeseListingResourceTest extends CustomApiTestCase
             'json' => $cheesyData + ['owner' => 'api/users/' . $authenticatedUser->getId()],
         ]);
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+
+        $client->request('POST', '/api/cheeses', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => $cheesyData,
+        ]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testUpdateCheeseListing()
