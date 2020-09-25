@@ -34,6 +34,8 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
         $data = $this->normalizer->normalize($object, $format, $context);
 
+        $data['isMe'] = $this->userIsOwner($object);
+
         // Here: add, edit, or delete some data
 
         return $data;
