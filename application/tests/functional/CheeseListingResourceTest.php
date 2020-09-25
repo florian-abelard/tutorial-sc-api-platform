@@ -27,9 +27,10 @@ class CheeseListingResourceTest extends CustomApiTestCase
     {
         $client = self::createClient();
 
-        $user = $this->createUser('cheese.lover@example.com', '123456');
+        $authenticatedUser = $this->createUser('cheese.lover@example.com', '123456');
+        $this->login($client, $authenticatedUser->getEmail(), '123456');
 
-        $this->login($client, $user->getEmail(), '123456');
+        $otherUser = $this->createUser('other.user@example.com', 'foo');
 
         $cheesyData = [
             'title' => 'Mystery cheese... kinda green',
@@ -39,9 +40,14 @@ class CheeseListingResourceTest extends CustomApiTestCase
 
         $client->request('POST', '/api/cheeses', [
             'headers' => ['Content-Type' => 'application/json'],
-            'json' => $cheesyData + ['owner' => 'api/users/'.$user->getId()],
+            'json' => $cheesyData + ['owner' => 'api/users/' . $otherUser->getId()],
         ]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST, 'not passing the correct owner');
 
+        $client->request('POST', '/api/cheeses', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => $cheesyData + ['owner' => 'api/users/' . $authenticatedUser->getId()],
+        ]);
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
