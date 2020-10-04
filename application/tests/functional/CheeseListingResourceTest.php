@@ -54,7 +54,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
             'headers' => ['Content-Type' => 'application/json'],
             'json' => $cheesyData,
         ]);
-        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
     public function testUpdateCheeseListing()

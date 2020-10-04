@@ -53,6 +53,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(PropertyFilter::class)
  *
  * @ORM\Entity(repositoryClass=CheeseListingRepository::class)
+ * @ORM\EntityListeners({"App\Listener\CheeseListingSetOwnerListener"})
  */
 class CheeseListing
 {
@@ -106,7 +107,6 @@ class CheeseListing
 
     /**
      * @Groups({"cheese:read", "cheese:write"})
-     * @Assert\NotBlank()
      * @IsValidOwner()
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="cheeseListings")
      * @ORM\JoinColumn(nullable=false)
