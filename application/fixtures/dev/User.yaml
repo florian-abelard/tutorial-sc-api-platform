@@ -1,22 +1,20 @@
-
 parameters:
-    admin_password_hash: $argon2id$v=19$m=65536,t=4,p=1$Lf87gymJ8heQZy1ChKU5OA$r0um/1DI0wtFkciHnb7pu0safNLg/AhoV2e1Nn0XnCY
+  admin_password_hash: $argon2id$v=19$m=65536,t=4,p=1$YpGijuK0Jf8LpyW25kuSZg$syf1li5STeW1LS0d4hTULkuQUc6TD8GHMqNECm8ztdI # admin
 
 App\Entity\User:
   user1:
-    email: 'fabelard@example.com'
-    username: 'fl0'
+    email: "fabelard@example.com"
+    username: "fl0"
     password: <{admin_password_hash}>
   user2:
-    email: 'maudlasterre@example.com'
-    username: 'm0d'
+    email: "maudlasterre@example.com"
+    username: "m0d"
     password: <{admin_password_hash}>
   user3:
-    email: 'roxabelard@example.com'
-    username: 'r0x'
+    email: "roxabelard@example.com"
+    username: "r0x"
     password: <{admin_password_hash}>
   user4:
-    email: 'colabelard@example.com'
-    username: 'c0lin'
+    email: "colabelard@example.com"
+    username: "c0lin"
     password: <{admin_password_hash}>
-  
