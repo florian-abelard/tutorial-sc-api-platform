@@ -60,7 +60,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @Groups({"user:write"})
+     * @Groups({"admin:write"})
      *
      * @ORM\Column(type="json")
      */
@@ -82,7 +82,7 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @Groups({"user:read", "user:write", "cheese_listing:item:get", "cheese_listing:write"})
+     * @Groups({"user:read", "user:write", "cheese:item:get"})
      *
      * @Assert\NotBlank()
      *
@@ -101,7 +101,7 @@ class User implements UserInterface
     private $cheeseListings;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"admin:read", "owner:read", "user:write"})
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */

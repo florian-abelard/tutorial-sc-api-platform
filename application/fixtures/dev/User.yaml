@@ -1,20 +1,27 @@
 parameters:
   admin_password_hash: $argon2id$v=19$m=65536,t=4,p=1$YpGijuK0Jf8LpyW25kuSZg$syf1li5STeW1LS0d4hTULkuQUc6TD8GHMqNECm8ztdI # admin
+  user_password_hash: $argon2id$v=19$m=65536,t=4,p=1$vVysl/Csy4s/w74aDh+LXw$ID+8iluYGNE6K55NKRIHDDchzTmHu625CwGSARfvlHI # user
 
 App\Entity\User:
-  user1:
+  admin1:
     email: "fabelard@example.com"
     username: "fl0"
     password: <{admin_password_hash}>
-  user2:
+    roles: ["ROLE_ADMIN"]
+    phoneNumber: "0240506070"
+  admin2:
     email: "maudlasterre@example.com"
     username: "m0d"
     password: <{admin_password_hash}>
-  user3:
+    roles: ["ROLE_ADMIN"]
+    phoneNumber: "0240506071"
+  user1:
     email: "roxabelard@example.com"
     username: "r0x"
-    password: <{admin_password_hash}>
-  user4:
+    password: <{user_password_hash}>
+    phoneNumber: "0240506073"
+  user2:
     email: "colabelard@example.com"
     username: "c0lin"
-    password: <{admin_password_hash}>
+    password: <{user_password_hash}>
+    phoneNumber: "0240506070"

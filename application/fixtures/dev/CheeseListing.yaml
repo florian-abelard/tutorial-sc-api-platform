@@ -3,25 +3,29 @@ App\Entity\CheeseListing:
     __construct: ['A large piece of Cheddar']
     description: 'Miam'
     price: 1200
-    owner: '@user1'
+    owner: '@admin1'
   cheese2:
     __construct: ['A truffled Brie']
     description: 'Merry christmas and Happy new year'
     price: 4000
-    owner: '@user1'
+    owner: '@admin1'
   cheese3:
     __construct: ['A little piece of Emmental']
     description: 'Almost good\n with a second line'
     price: 50
-    owner: '@user1'
+    owner: '@admin2'
   cheese4:
     __construct: ['Corsican cheese of ewe']
     description: 'Strong but not too much'
-    price: 700  
-    owner: '@user2'
-  cheese_{5..15}:
+    price: 700
+    owner: '@user1'
+  cheese_{5..7}:
+    __construct: ['<sentence(4, true)>']
+    description: <text(300)>
+    price: <numberBetween(50,5000)>
+    owner: '@admin*'
+  cheese_{8..10}:
     __construct: ['<sentence(4, true)>']
     description: <text(300)>
     price: <numberBetween(50,5000)>
     owner: '@user*'
-  
