@@ -123,4 +123,32 @@ class CheeseListingResourceTest extends CustomApiTestCase
 
         $this->assertJsonContains(['hydra:totalItems' => 2]);
     }
+
+    public function testGetCheeseListingItem()
+    {
+        $client = self::createClient();
+        $user = $this->createUser('cheeseplease@example.com', 'foo');
+
+        $cheeseListing = new CheeseListing('cheese1');
+        $cheeseListing->setOwner($user);
+        $cheeseListing->setPrice(1000);
+        $cheeseListing->setDescription('cheese');
+        $cheeseListing->setIsPublished(false);
+
+        $em = $this->getEntityManager();
+        $em->persist($cheeseListing);
+        $em->flush();
+
+        $client->request('GET', '/api/cheeses' . $cheeseListing->getId());
+        $this->assertResponseStatusCodeSame(404);
+
+        // $cheeseListing->setIsPublished(true);
+
+        // $em = $this->getEntityManager();
+        // $em->persist($cheeseListing);
+        // $em->flush();
+
+        // $client->request('GET', '/api/cheeses' . $cheeseListing->getId());
+        // $this->assertResponseStatusCodeSame(200);
+    }
 }

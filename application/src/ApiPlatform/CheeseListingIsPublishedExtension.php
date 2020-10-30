@@ -23,6 +23,20 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
         string $resourceClass,
         string $operationName = null
     ) {
+        $this->addWhere($queryBuilder, $resourceClass);
+    }
+
+    public function applyToItem(
+        QueryBuilder $queryBuilder,
+        QueryNameGeneratorInterface $queryNameGenerator,
+        string $resourceClass,
+        string $operationName = null
+    ) {
+        $this->addWhere($queryBuilder, $resourceClass);
+    }
+
+    private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
+    {
         if ($resourceClass !== CheeseListing::class) {
             return;
         }
@@ -32,7 +46,12 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder
-            ->andWhere(sprintf('%s.isPublished = :isPublished', $rootAlias))
-            ->setParameter('isPublished', true);
+            ->andWhere(sprintf(
+                '%s.isPublished = :isPublished OR %.owner = :owner',
+                $rootAlias,
+                $rootAlias
+            ))
+            ->setParameter('isPublished', true)
+            ->setParameter('owner', $this->security->getUser());
     }
 }
