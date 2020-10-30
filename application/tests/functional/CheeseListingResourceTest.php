@@ -105,11 +105,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $cheeseListing2->setOwner($user);
         $cheeseListing2->setPrice(1000);
         $cheeseListing2->setDescription('cheese');
+        $cheeseListing2->setIsPublished(true);
 
         $cheeseListing3 = new CheeseListing('cheese3');
         $cheeseListing3->setOwner($user);
         $cheeseListing3->setPrice(1000);
         $cheeseListing3->setDescription('cheese');
+        $cheeseListing3->setIsPublished(true);
 
         $em = $this->getEntityManager();
         $em->persist($cheeseListing1);
@@ -119,6 +121,6 @@ class CheeseListingResourceTest extends CustomApiTestCase
 
         $client->request('GET', '/api/cheeses');
 
-        $this->assertJsonContains(['hydra:totalItems' => 3]);
+        $this->assertJsonContains(['hydra:totalItems' => 2]);
     }
 }
