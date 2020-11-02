@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   composer:
-    image: composer:latest
+    image: composer:1
     container_name: ${APP_NAME}-composer
     environment:
       - COMPOSER_CACHE_DIR=/tmp/.composer/cache
