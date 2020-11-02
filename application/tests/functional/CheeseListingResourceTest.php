@@ -3,13 +3,17 @@
 namespace App\Tests\Functional;
 
 use App\Entity\CheeseListing;
+use App\Factory\CheeseListingFactory;
+use App\Factory\UserFactory;
 use App\Test\CustomApiTestCase;
-use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 use Symfony\Component\HttpFoundation\Response;
+use Zenstruck\Foundry\Test\Factories;
+use Zenstruck\Foundry\Test\ResetDatabase;
 
 class CheeseListingResourceTest extends CustomApiTestCase
 {
-    use ReloadDatabaseTrait;
+    use Factories;
+    use ResetDatabase;
 
     public function testCreateCheeseListingWithAnonymousUser()
     {
@@ -94,7 +98,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
     public function testGetCheeseListingCollection()
     {
         $client = self::createClient();
-        $user = $this->createUser('cheeseplease@example.com', '123456');
+        $user = $this->createUser('cheese.please@example.com', '123456');
 
         $cheeseListing1 = new CheeseListing('cheese1');
         $cheeseListing1->setOwner($user);
@@ -127,7 +131,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
     public function testGetCheeseListingItem()
     {
         $client = self::createClient();
-        $user = $this->createUser('cheeseplease@example.com', '123456');
+        $user = $this->createUser('cheese.or.nothing@example.com', '123456');
 
         $cheeseListing = new CheeseListing('cheese1');
         $cheeseListing->setOwner($user);
@@ -148,5 +152,17 @@ class CheeseListingResourceTest extends CustomApiTestCase
 
         $data = $client->getResponse()->toArray();
         $this->assertEmpty($data['cheeseListings']);
+    }
+
+    public function testPublishCheeseListing()
+    {
+        $client = self::createClient();
+
+        $user = UserFactory::new()->create();
+        $cheeseListing = CheeseListingFactory::new()->create([
+            'owner' => $user,
+        ]);
+
+        $this->login($client, $user->getEmail(), UserFactory::DEFAULT_PASSWORD);
     }
 }
