@@ -94,7 +94,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
     public function testGetCheeseListingCollection()
     {
         $client = self::createClient();
-        $user = $this->createUser('cheeseplease@example.com', 'foo');
+        $user = $this->createUser('cheeseplease@example.com', '123456');
 
         $cheeseListing1 = new CheeseListing('cheese1');
         $cheeseListing1->setOwner($user);
@@ -127,7 +127,7 @@ class CheeseListingResourceTest extends CustomApiTestCase
     public function testGetCheeseListingItem()
     {
         $client = self::createClient();
-        $user = $this->createUser('cheeseplease@example.com', 'foo');
+        $user = $this->createUser('cheeseplease@example.com', '123456');
 
         $cheeseListing = new CheeseListing('cheese1');
         $cheeseListing->setOwner($user);
@@ -142,13 +142,11 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $client->request('GET', '/api/cheeses' . $cheeseListing->getId());
         $this->assertResponseStatusCodeSame(404);
 
-        // $cheeseListing->setIsPublished(true);
+        $this->login($client, $user->getEmail(), '123456');
 
-        // $em = $this->getEntityManager();
-        // $em->persist($cheeseListing);
-        // $em->flush();
+        $client->request('GET', '/api/users/' . $user->getId());
 
-        // $client->request('GET', '/api/cheeses' . $cheeseListing->getId());
-        // $this->assertResponseStatusCodeSame(200);
+        $data = $client->getResponse()->toArray();
+        $this->assertEmpty($data['cheeseListings']);
     }
 }

@@ -92,7 +92,7 @@ class User implements UserInterface
 
     /**
      * @ApiSubresource()
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:write"})
      *
      * @Assert\Valid()
      *
@@ -238,6 +238,17 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @Groups({"user:read"})
+     * @SerializedName("cheeseListings")
+     */
+    public function getPublishedCheeseListings(): Collection
+    {
+        return $this->cheeseListings->filter(function (CheeseListing $cheeseListing) {
+            return $cheeseListing->getIsPublished();
+        });
     }
 
     public function getPhoneNumber(): ?string
