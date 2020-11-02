@@ -2,29 +2,44 @@
 
 namespace App\DataPersister;
 
+use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserDataPersister implements DataPersisterInterface
+class UserDataPersister implements ContextAwareDataPersisterInterface
 {
-    private $entityManager;
+    private $decoratedDataPersister;
     private $userPasswordEncoder;
+    private $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $userPasswordEncoder)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        DataPersisterInterface $decoratedDataPersister,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        LoggerInterface $logger
+    ) {
+        $this->decoratedDataPersister = $decoratedDataPersister;
         $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->logger = $logger;
     }
 
-    public function supports($data): bool
+    public function supports($data, array $context = []): bool
     {
         return $data instanceof User;
     }
 
-    public function persist($data)
+    public function persist($data, array $context = [])
     {
+        echo '<pre>',print_r($context, true),'</pre>';
+
+        if (($context['collection_operation_name'] ?? null) === 'post') {
+            $this->logger->info(sprintf('User %s just registered! Eureka!', $data->getEmail()));
+        }
+        if (($context['item_operation_name'] ?? null) === 'put') {
+            $this->logger->info(sprintf('User "%s" is being updated!', $data->getId()));
+        }
+
         if ($data->getPlainPassword()) {
             $data->setPassword(
                 $this->userPasswordEncoder->encodePassword($data, $data->getPlainPassword())
@@ -32,13 +47,11 @@ class UserDataPersister implements DataPersisterInterface
             $data->eraseCredentials();
         }
 
-        $this->entityManager->persist($data);
-        $this->entityManager->flush();
+        $this->decoratedDataPersister->persist($data);
     }
 
-    public function remove($data)
+    public function remove($data, array $context = [])
     {
-        $this->entityManager->remove($data);
-        $this->entityManager->flush();
+        $this->decoratedDataPersister->remove($data);
     }
 }
