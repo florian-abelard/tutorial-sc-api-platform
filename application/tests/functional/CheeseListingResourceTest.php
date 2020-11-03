@@ -164,5 +164,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
         ]);
 
         $this->login($client, $user->getEmail(), UserFactory::DEFAULT_PASSWORD);
+
+        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+            'json' => ['isPublished' => true],
+        ]);
+        $this->assertResponseStatusCodeSame(200);
+
+        $cheeseListing->refresh();
+        $this->assertTrue($cheeseListing->getIsPublished());
     }
 }
