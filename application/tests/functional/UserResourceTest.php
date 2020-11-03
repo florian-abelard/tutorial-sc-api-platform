@@ -3,12 +3,15 @@
 namespace App\Tests\Functional;
 
 use App\Entity\User;
+use App\Factory\UserFactory;
 use App\Test\CustomApiTestCase;
-use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+use Zenstruck\Foundry\Test\Factories;
+use Zenstruck\Foundry\Test\ResetDatabase;
 
 class UserResourceTest extends CustomApiTestCase
 {
-    use ReloadDatabaseTrait;
+    use Factories;
+    use ResetDatabase;
 
     public function testCreateUser()
     {
@@ -56,34 +59,32 @@ class UserResourceTest extends CustomApiTestCase
     {
         $client = self::createClient();
 
-        $user = $this->createUser('cheeseisbeautiful@example.com', 'cantal');
-        $userAuthenticated = $this->createUser('cheeseplease@example.com', 'tome');
-        $this->logIn($client, 'cheeseplease@example.com', 'tome');
+        $user = UserFactory::new()->create(['phoneNumber' => '555.123.4567']);
+        $authenticatedUser = UserFactory::new()->create();
 
-        $user->setPhoneNumber('0240403030');
-        $em = $this->getEntityManager();
-        $em->flush();
+        $this->login($client, $authenticatedUser->getEmail(), UserFactory::DEFAULT_PASSWORD);
 
-        $client->request('GET', '/api/users/' . $user->getId());
-
+        $client->request('GET', '/api/users/'.$user->getId());
         $this->assertJsonContains([
-            'email' => 'cheeseisbeautiful@example.com',
+            'username' => $user->getUsername(),
         ]);
 
         $data = $client->getResponse()->toArray();
-
         $this->assertArrayNotHasKey('phoneNumber', $data);
-
-        $user = $em->getRepository(User::class)->find($user->getId());
-        $user->setRoles(['ROLE_ADMIN']);
-        $em->flush();
-
-        $this->logIn($client, 'cheeseisbeautiful@example.com', 'cantal');
-
-        $client->request('GET', '/api/users/' . $user->getId());
-
         $this->assertJsonContains([
-            'phoneNumber' => '0240403030',
+            'isMe' => false,
+        ]);
+
+        // refresh the user & elevate
+        $user->refresh();
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->save();
+
+        $this->login($client, $user->getEmail(), UserFactory::DEFAULT_PASSWORD);
+        $client->request('GET', '/api/users/'.$user->getId());
+        $this->assertJsonContains([
+            'phoneNumber' => '555.123.4567',
+            'isMe' => true,
         ]);
     }
 }

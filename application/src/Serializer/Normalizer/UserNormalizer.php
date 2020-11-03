@@ -17,14 +17,15 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
     private $security;
 
-    public function __construct(Security $security) {
+    public function __construct(Security $security)
+    {
         $this->security = $security;
-     }
+    }
 
     /**
      * @param User $object
      */
-    public function normalize($object, $format = null, array $context = array()): array
+    public function normalize($object, $format = null, array $context = []): array
     {
         $context[self::ALREADY_CALLED] = true;
 
@@ -34,9 +35,7 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
         $data = $this->normalizer->normalize($object, $format, $context);
 
-        $data['isMe'] = $this->userIsOwner($object);
-
-        // Here: add, edit, or delete some data
+        // $data['isMe'] = $this->userIsOwner($object);
 
         return $data;
     }

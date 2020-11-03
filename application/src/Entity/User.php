@@ -107,6 +107,13 @@ class User implements UserInterface
      */
     private $phoneNumber;
 
+    /**
+     * Returns true if this is the currently-authenticated user.
+     *
+     * @Groups({"user:read"})
+     */
+    private $isMe;
+
     public function __construct()
     {
         $this->cheeseListings = new ArrayCollection();
@@ -259,6 +266,22 @@ class User implements UserInterface
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getIsMe(): bool
+    {
+        if ($this->isMe === null) {
+            throw new \LogicException('The isMe field has not been initialized');
+        }
+
+        return $this->isMe;
+    }
+
+    public function setIsMe(bool $isMe): self
+    {
+        $this->isMe = $isMe;
 
         return $this;
     }
