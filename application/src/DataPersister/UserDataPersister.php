@@ -31,8 +31,6 @@ class UserDataPersister implements ContextAwareDataPersisterInterface
 
     public function persist($data, array $context = [])
     {
-        echo '<pre>',print_r($context, true),'</pre>';
-
         if (($context['collection_operation_name'] ?? null) === 'post') {
             $this->logger->info(sprintf('User %s just registered! Eureka!', $data->getEmail()));
         }
