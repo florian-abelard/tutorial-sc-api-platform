@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\Repository\CheeseListingRepository;
+use App\Validator\IsValidForPublication;
 use App\Validator\IsValidOwner;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
@@ -54,6 +55,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity(repositoryClass=CheeseListingRepository::class)
  * @ORM\EntityListeners({"App\Listener\Doctrine\CheeseListingSetOwnerListener"})
+ *
+ * @IsValidForPublication()
  */
 class CheeseListing
 {

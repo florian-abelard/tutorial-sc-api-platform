@@ -15,8 +15,8 @@ endif
 phpunit: db-init-for-test ##@phpunit launch PHPUnit tests
 	$(call PHPUNIT_DOCKER_CMD, --verbose)
 
-phpunit-filter: db-init-for-test ##@phpunit launch PHPUnit command with the filter passed in argument
-	$(call PHPUNIT_DOCKER_CMD, --filter=$(PHPUNIT_FILTER_ARG) --verbose)
+phpunit-filter: ##@phpunit launch PHPUnit command with the filter passed in argument
+	$(call PHPUNIT_DOCKER_CMD, --filter=$(PHPUNIT_FILTER_ARG))
 
 phpunit-install-env: ##@phpunit install PHPUnit in environment
 	docker-compose -f ${DOCKER_COMPOSE_BUILDER_FILE} run -T --rm --user ${USER_ID}:${GROUP_ID} composer ./vendor/bin/simple-phpunit install
