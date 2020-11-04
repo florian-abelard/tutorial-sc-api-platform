@@ -47,7 +47,7 @@ class CheeseListingIsPublishedExtension implements QueryCollectionExtensionInter
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder
             ->andWhere(sprintf(
-                '%s.isPublished = :isPublished OR %.owner = :owner',
+                '%s.isPublished = :isPublished OR %s.owner = :owner',
                 $rootAlias,
                 $rootAlias
             ))
