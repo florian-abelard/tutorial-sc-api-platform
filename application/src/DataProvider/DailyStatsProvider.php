@@ -3,37 +3,31 @@
 namespace App\DataProvider;
 
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
+use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use App\Entity\DailyStats;
-use App\Repository\CheeseListingRepository;
+use App\Service\StatsHelper;
 
-class DailyStatsProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
+class DailyStatsProvider implements CollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
 {
-    private $cheeseListingRepository;
+    private $statsHelper;
 
-    public function __construct(CheeseListingRepository $cheeseListingRepository)
+    public function __construct(StatsHelper $statsHelper)
     {
-        $this->cheeseListingRepository = $cheeseListingRepository;
+        $this->statsHelper = $statsHelper;
     }
 
     public function getCollection(string $resourceClass, string $operationName = null)
     {
-        $cheeseListings = $this->cheeseListingRepository
-            ->findBy([], [], 5);
+        return $this->statsHelper->fetchMany();
+    }
 
-        $stats = new DailyStats(
-            new \DateTime(),
-            1000,
-            $cheeseListings,
-        );
-
-        $stats2 = new DailyStats(
-            new \DateTime('-1 day'),
-            2000,
-            $cheeseListings,
-        );
-
-        return [$stats, $stats2];
+    /**
+     * @param string $id
+     */
+    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
+    {
+        return $this->statsHelper->fetchOne($id);
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
