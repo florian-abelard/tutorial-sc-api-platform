@@ -9,7 +9,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"daily-stats:read"}},
- *     itemOperations={"get"},
+ *     denormalizationContext={"groups"={"daily-stats:write"}},
+ *     itemOperations={"get", "put"},
  *     collectionOperations={"get"},
  *     paginationItemsPerPage=7,
  * )
@@ -22,7 +23,7 @@ class DailyStats
     public $date;
 
     /**
-     * @Groups({"daily-stats:read"})
+     * @Groups({"daily-stats:read", "daily-stats:write"})
      */
     public $totalVisitors;
 
