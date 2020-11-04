@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use App\ApiPlatform\CheeseSearchFilter;
 use App\Repository\CheeseListingRepository;
 use App\Validator\IsValidForPublication;
 use App\Validator\IsValidOwner;
@@ -52,6 +53,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ApiFilter(PropertyFilter::class)
+ * @ApiFilter(CheeseSearchFilter::class)
  *
  * @ORM\Entity(repositoryClass=CheeseListingRepository::class)
  * @ORM\EntityListeners({"App\EventListener\Doctrine\CheeseListingSetOwnerListener"})
