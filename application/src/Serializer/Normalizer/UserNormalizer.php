@@ -25,7 +25,7 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
     /**
      * @param User $object
      */
-    public function normalize($object, $format = null, array $context = []): array
+    public function normalize($object, $format = null, array $context = [])
     {
         $context[self::ALREADY_CALLED] = true;
 

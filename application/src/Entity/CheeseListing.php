@@ -9,10 +9,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\ApiPlatform\CheeseSearchFilter;
+use App\DTO\CheeseListingOutput;
 use App\Repository\CheeseListingRepository;
 use App\Validator\IsValidForPublication;
 use App\Validator\IsValidOwner;
-use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
+ *      output=CheeseListingOutput::CLASS,
  *      collectionOperations={
  *          "get",
  *          "post"={"security"="is_granted('ROLE_USER')"}
@@ -186,16 +187,6 @@ class CheeseListing
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    /**
-     * How long ago in text that this cheese listing was added.
-     *
-     * @Groups({"cheese:read"})
-     */
-    public function getCreatedAtAgo(): ?string
-    {
-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
     }
 
     public function getIsPublished(): ?bool

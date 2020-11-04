@@ -46,7 +46,7 @@ class IsValidForPublicationValidator extends ConstraintValidator
 
         if ($value->getIsPublished()) {
             // publishing
-            if (strlen($value->getDescription() < 100)) {
+            if (strlen($value->getDescription()) < 100) {
                 $this->context
                 ->buildViolation('Cannot publish: description is too short!')
                 ->atPath('description')
