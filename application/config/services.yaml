@@ -34,7 +34,10 @@ services:
         decorates: "api_platform.serializer.context_builder"
         arguments: ['@App\Serializer\AdminGroupsContextBuilder.inner']
 
-    App\Listener\Doctrine\CheeseListingSetOwnerListener:
+    App\EventListener\Doctrine\CheeseListingSetOwnerListener:
+        tags: [doctrine.orm.entity_listener]
+
+    App\EventListener\Doctrine\UserSetIsMvpListener:
         tags: [doctrine.orm.entity_listener]
 
     App\DataPersister\UserDataPersister:

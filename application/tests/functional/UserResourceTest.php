@@ -59,7 +59,10 @@ class UserResourceTest extends CustomApiTestCase
     {
         $client = self::createClient();
 
-        $user = UserFactory::new()->create(['phoneNumber' => '555.123.4567']);
+        $user = UserFactory::new()->create([
+            'phoneNumber' => '555.123.4567',
+            'username' => 'cheesehead',
+        ]);
         $authenticatedUser = UserFactory::new()->create();
 
         $this->login($client, $authenticatedUser->getEmail(), UserFactory::DEFAULT_PASSWORD);
@@ -68,13 +71,12 @@ class UserResourceTest extends CustomApiTestCase
         $this->assertResponseStatusCodeSame(200);
         $this->assertJsonContains([
             'username' => $user->getUsername(),
+            'isMe' => false,
+            'isMvp' => true,
         ]);
 
         $data = $client->getResponse()->toArray();
         $this->assertArrayNotHasKey('phoneNumber', $data);
-        $this->assertJsonContains([
-            'isMe' => false,
-        ]);
 
         // refresh the user & elevate
         $user->refresh();

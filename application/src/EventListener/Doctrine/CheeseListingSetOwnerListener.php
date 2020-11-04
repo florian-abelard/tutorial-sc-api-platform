@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listener\Doctrine;
+namespace App\EventListener\Doctrine;
 
 use App\Entity\CheeseListing;
 use Symfony\Component\Security\Core\Security;

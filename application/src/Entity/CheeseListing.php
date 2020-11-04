@@ -54,7 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(PropertyFilter::class)
  *
  * @ORM\Entity(repositoryClass=CheeseListingRepository::class)
- * @ORM\EntityListeners({"App\Listener\Doctrine\CheeseListingSetOwnerListener"})
+ * @ORM\EntityListeners({"App\EventListener\Doctrine\CheeseListingSetOwnerListener"})
  *
  * @IsValidForPublication()
  */

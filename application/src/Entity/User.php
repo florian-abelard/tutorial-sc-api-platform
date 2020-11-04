@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use App\Doctrine\UserSetIsMvpListener;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,6 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @ORM\EntityListeners({UserSetIsMvpListener::class})
  */
 class User implements UserInterface
 {
@@ -113,6 +115,13 @@ class User implements UserInterface
      * @Groups({"user:read"})
      */
     private $isMe = false;
+
+    /**
+     * Returns true if the user is a MVP.
+     *
+     * @Groups({"user:read"})
+     */
+    private $isMvp = false;
 
     public function __construct()
     {
@@ -278,6 +287,18 @@ class User implements UserInterface
     public function setIsMe(bool $isMe): self
     {
         $this->isMe = $isMe;
+
+        return $this;
+    }
+
+    public function getIsMvp(): bool
+    {
+        return $this->isMvp;
+    }
+
+    public function setIsMvp(bool $isMvp): self
+    {
+        $this->isMvp = $isMvp;
 
         return $this;
     }
