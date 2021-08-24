@@ -30,6 +30,7 @@ make db-init
 
 # Afficher toutes les commandes disponibles
 make
+```
 
 ## Accès
 
